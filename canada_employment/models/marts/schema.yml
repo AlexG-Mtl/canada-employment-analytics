@@ -1,0 +1,29 @@
+
+version: 2
+
+models:
+  - name: mart_employment_trends
+    description: Monthly seasonally adjusted employment trends for three Canadian provinces.
+
+    columns:
+      - name: employment_month
+        data_tests:
+          - not_null
+
+      - name: province
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - Quebec
+                  - Ontario
+                  - British Columbia
+
+      - name: employed_thousands
+        data_tests:
+          - not_null
+
+    data_tests:
+      - unique:
+          column_name: "province || '-' || TO_VARCHAR(employment_month, 'YYYY-MM')"
